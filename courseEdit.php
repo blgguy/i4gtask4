@@ -45,7 +45,7 @@ if (isset($_POST['addCourse'])) {
                 $data = array(  
                     'title'         =>  $title,
                     'description'   =>  $desc,      
-                    'tutor'         =>  'aje',  
+                    'tutor'         =>  $mainName,  
                     'price'         =>  $price,      
                     'video'         =>  $final_name      
                 );
@@ -62,7 +62,7 @@ if (isset($_POST['addCourse'])) {
              $data = array(  
                 'title'         =>  $title,
                 'description'   =>  $desc,      
-                'tutor'         =>  'aje',  
+                'tutor'         =>  $mainName,  
                 'price'         =>  $price,      
                 'video'         =>  $Vvideo      
             );
