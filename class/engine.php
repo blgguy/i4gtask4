@@ -7,7 +7,7 @@ include_once('petrol.php');
 class engine extends DB{
 
     public function login($username){
-        $sql = "SELECT * FROM `users` WHERE `email` = '$username' || `username` = '$username'";
+        $sql = "SELECT * FROM `users` WHERE `email` = '$username'";
         $array = array(); // assigning an empty array.
         $query = $this->conector->query($sql);
         
@@ -24,14 +24,12 @@ class engine extends DB{
     public function del($table, $id)
     {
 
-        $sql    = "DELETE FROM `".$table."` WHERE `id` =".$id;
+        $sql    = "DELETE FROM `$table` WHERE `id` =".$id;
         $query  = $this->conector->query($sql);
-        if($query->num_rows > 0){
             if ($query) {
                 return true;
-            }
-        }else{
-            return false;
+            }else{
+                return false;
         }
     }
 
@@ -70,14 +68,20 @@ class engine extends DB{
 
     }    
 
-    public function coutTables($table)
+    public function viewById($table, $id)
     {
-        $sql = "SELECT * FROM `".$table;
-        $sql .= "` WHERE `status` = '404'";
+        $sql = "SELECT * FROM `$table`";
+        $sql .= " WHERE `id` = ".$id;
+        $array = array();
         $query = $this->conector->query($sql);
-        $tableCount = $query->num_rows;
-
-        return $tableCount;
+         if($query->num_rows > 0){
+            while ($row = $query->fetch_array()) {
+                $array[] = $row;
+            }
+            return $array;
+        }else{
+            return false;
+        }
     }
 
     public function view($table)
