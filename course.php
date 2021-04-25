@@ -100,7 +100,7 @@ if (isset($_POST['addCourse'])) {
               <label class="form-label">Description</label>
               <textarea class="form-control" name="desc" id="" cols="40" rows="3">..</textarea>
             </div>
-            <button type="submit" name="addCourse" class="btn btn-color">Add Course</button>
+            <button type="submit" name="addCourse" class="btn btn-success">Add Course</button>
           </form>
         </div>
     </div>
