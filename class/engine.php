@@ -2,6 +2,9 @@
 include_once('petrol.php');
 
 /**
+ * @Aminu MUhammed
+ * Twitter - @blg_guy
+ * Website - https://blg.com.ng
  * this class deals with must of the task of the project [INSERT | UPDATE | DELETE]
  */
 class engine extends DB{
@@ -36,7 +39,6 @@ class engine extends DB{
 
     public function update($table, $fields, $ky)
     {
-        //$id = "";
         $codition = "";
         foreach ($fields as $key => $value) {
             $codition .= "`".$key. "` = '".$value."', ";
