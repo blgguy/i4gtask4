@@ -70,8 +70,8 @@ if (isset($_POST['passReset'])) {
                     <input type="password" name="password" id="input-pass" class="form-control form-control-alternative" placeholder="******">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success btn-md" name="passReset">Reset Password</button>
-              </form>
+                <br><button type="submit" class="btn btn-success btn-md" name="passReset">Reset Password</button>
+            </form>
         </div>
     </div>
 </div>
