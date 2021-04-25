@@ -1,16 +1,23 @@
 <?php
 require_once('class/engine.php');
-error_reporting(1);
+$getID = $_GET['id'];
 $engine = new engine();
 $message='';
-
+$view = $engine->viewById('courses', $getID);
+foreach ($view as $key) { 
+    $Vtitle = $key['title'];
+    $Vdesc = $key['description'];      
+    $Vtutur = $key['tutor']; 
+    $Vprice = $key['price'];     
+    $Vvideo = $key['video'];    
+}
 if (isset($_POST['addCourse'])) {
     $title         =   sentize($_POST['title']);
     $price         =   sentize($_POST['price']);
     $video         =   $_FILES["video"]["name"];
     $desc          =   sentize($_POST['desc']);
 
-    if (empty($title) || empty($price) || empty($video) || empty($desc)) {
+    if (empty($title) || empty($price) || empty($desc)) {
         $message = "please fill the require fields";
     }else{ 
         // Check whether video size to not morethan 100 mb is valid 
@@ -29,24 +36,41 @@ if (isset($_POST['addCourse'])) {
         $randky     = 'course-I4G-Training-'.substr(str_shuffle($randky), 0, 18).$datee;
         $final_name = $randky.'.'.$videoType;
         
-        // Check whether video type is valid 
-        if(!in_array($videoType, $allowTypes)){
-            $message = "File Format Not Suppoted"; 
+        if (!empty($video)) {
+            // Check whether video type is valid 
+            if(!in_array($videoType, $allowTypes)){
+                $message = "File Format Not Suppoted"; 
+            }else{
+                // Upload file to server 
+                $data = array(  
+                    'title'         =>  $title,
+                    'description'   =>  $desc,      
+                    'tutor'         =>  'aje',  
+                    'price'         =>  $price,      
+                    'video'         =>  $final_name      
+                );
+                $update = $engine->update('courses', $data, $getID);
+                move_uploaded_file($_FILES["video"]["tmp_name"], $targetDir.$final_name);
+                if (!$update) {
+                    $message = "Sorry! <br>Having issue updating this course come back later.";
+                }else{
+                    $message = "<h5 style='font-size:18px; color: #fff font-weight: bolder;'>You Successfully updated this course</h5>";
+                }
+            }
         }else{
-            // Upload file to server 
-            $data = array(  
+             // Upload file to server 
+             $data = array(  
                 'title'         =>  $title,
                 'description'   =>  $desc,      
                 'tutor'         =>  'aje',  
                 'price'         =>  $price,      
-                'video'         =>  $final_name      
+                'video'         =>  $Vvideo      
             );
-            $insert = $engine->Insert('courses', $data);
-            move_uploaded_file($_FILES["video"]["tmp_name"], $targetDir.$final_name);
-            if (!$insert) {
-                $message = "Sorry! <br>Having issue saving this course come back later.";
+            $update = $engine->update('courses', $data, $getID);
+            if (!$update) {
+                $message = "Sorry! <br>Having issue updating this course come back later.";
             }else{
-                $message = "<h5 style='font-size:18px; color: #fff font-weight: bolder;'>You Successfully save this course</h5>";
+                $message = "<h5 style='font-size:18px; color: #fff font-weight: bolder;'>You Successfully update this course</h5>";
             }
         }
     }
@@ -83,29 +107,29 @@ if (isset($_POST['addCourse'])) {
             </div>
         </div>
         <div class="col-sm-8">
-          <form class="row g-3" method="post" enctype="multipart/form-data">
-            <div class="col-md-6">
-              <label class="form-label">Title</label>
-              <input type="text" name="title" class="form-control" id="inputEmail4">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Price</label>
-              <input type="text" name="price" class="form-control" id="inputPassword4">
-            </div>
-            <div class="col-md-12">
-              <label class="form-label">Add Video</label>
-              <input class="form-control" name="video" type="file" id="formFile">
-            </div>
-            <div class="col-12">
-              <label class="form-label">Description</label>
-              <textarea class="form-control" name="desc" id="" cols="40" rows="3">..</textarea>
-            </div>
-            <button type="submit" name="addCourse" class="btn btn-color">Add Course</button>
-          </form>
+            <form class="row g-3" method="post" enctype="multipart/form-data">
+                <div class="col-md-6">
+                <label class="form-label">Title</label>
+                <input type="text" name="title" value="<?php echo $Vtitle;?>" class="form-control" id="inputEmail4">
+                </div>
+                <div class="col-md-6">
+                <label class="form-label">Price</label>
+                <input type="text" name="price" value="<?php echo $Vprice;?>" class="form-control" id="inputPassword4">
+                </div>
+                <div class="col-md-12">
+                <label class="form-label">Add Video</label><br>
+                <span style="color: red;">If you will use the current video leave the field blank</span>
+                <input class="form-control" name="video" type="file" id="formFile">
+                </div>
+                <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" name="desc" id="" cols="40" rows="3"><?php echo $Vdesc;?></textarea>
+                </div>
+                <button type="submit" name="addCourse" class="btn btn-color">Add Course</button>
+            </form>
         </div>
     </div>
   </div>
-
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

@@ -1,10 +1,4 @@
-<?php
-require_once('class/engine.php');
-
-$engine     = new engine();
-$courses   = $engine->view('courses');
-?>
-
+<?php require_once('header.php'); ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,15 +9,16 @@ $courses   = $engine->view('courses');
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Dashboard Page | I4G_Training Task 04</title>
   </head>
   <body>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
                 <div class="d-grid gap-2 d-md-block">
-                    <a href="course.php"><button class="btn btn-primary" type="button">Add Course</button></a>
-                    <a href="signout.php"><button class="btn btn-primary" type="button">Logout</button></a>
+                    <a href="course.php"><button class="btn btn-success" type="button">Add Course</button></a>
+                    <a href="signout.php"><button class="btn btn-danger" type="button">Logout</button></a>
+                    <a href="password.php"><button class="btn btn-danger" type="button">Password Reset</button></a>
                 </div>
             </div>
             <div class="col-sm-8">
@@ -32,7 +27,7 @@ $courses   = $engine->view('courses');
                         <tr>
                         <th scope="col">#</th>
                         <th scope="col">video</th>
-                        <th scope="col">Course</th>
+                        <th scope="col">Title</th>
                         <th scope="col">Description</th>
                         <th scope="col">Tutor</th>
                         <th scope="col">price</th>
@@ -54,22 +49,22 @@ $courses   = $engine->view('courses');
                     ?>
                         <tr>
                             <th scope="row"><?php echo $id++;?></th>
+                            <td>
+                            <video width="100" height="100" controls>
+                                <source src="controller/files/<?php echo $video;?>" type="video/mp4">
+                                <source src="controller/files/<?php echo $video;?>" type="video/mov">
+                                <source src="controller/files/<?php echo $video;?>" type="video/avi">
+                                Your browser does not support the video tag.
+                            </video>
+                            </td>
                             <td><?php echo $title;?></td>
                             <td><?php echo $desc;?></td>
                             <td><?php echo $tutor;?></td>
                             <td><?php echo $price;?></td>
-                            <td>
-                            <video width="100" height="100" controls>
-                                <source src="movie.mp4" type="video/mp4">
-                                <source src="movie.ogg" type="video/ogg">
-                                Your browser does not support the video tag.
-                            </video>
-                            <?php //echo $video;?>
-                            </td>
                             <td><?php echo $dateReg;?></td>
                             <td>  
-                                <a href="courseEdit.php?id=<?php echo $idd;?></td>"><button type="button" class="btn btn-outline-success">Edit</button>
-                                <a href="course.php?del=<?php echo $idd;?></td>"><button type="button" class="btn btn-outline-danger">Delete</button>
+                                <a href="courseEdit.php?id=<?php echo $idd;?>"><button type="button" class="btn btn-outline-success">Edit</button>
+                                <a href="courseDel.php?id=<?php echo $idd;?>"><button type="button" class="btn btn-outline-danger">Delete</button>
                             </td>
                         </tr>
                         <?php } ?>
