@@ -12,23 +12,23 @@ class DB{
     private $host       = 'localhost';
     private $username   = 'root';
     private $password   = '';
-    private $database   = 'cheftailor';
+    private $database   = 'i4g_training_task';
     
-    protected $Jigo;
+    protected $conector;
     
     public function __construct(){
 
-        if (!isset($this->Jigo)) {
+        if (!isset($this->conector)) {
             
-            $this->Jigo = new mysqli($this->host, $this->username, $this->password, $this->database);
+            $this->conector = new mysqli($this->host, $this->username, $this->password, $this->database);
             
-            if (!$this->Jigo) {
-                echo '<h3>404 NOT FOUND!</h3>';
+            if (!$this->conector) {
+                echo '<h3>Error found, please contact your administrator!</h3>';
                 exit;
             }            
         }    
         
-        return $this->Jigo;
+        return $this->conector;
     }
 }
 ?>

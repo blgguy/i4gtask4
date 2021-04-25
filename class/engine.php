@@ -6,14 +6,33 @@ include_once('petrol.php');
  */
 class engine extends DB{
 
+    public function login($username){
+        $sql = "SELECT * FROM `users` WHERE `email` = '$username' || `username` = '$username'";
+        $array = array(); // assigning an empty array.
+        $query = $this->conector->query($sql);
+        
+        if($query->num_rows > 0){
+            while ($row = $query->fetch_array()) {
+                $array[] = $row;
+            }
+            return $array;
+        }else{
+            return false;
+        }
+    }
+
     public function del($table, $id)
     {
 
-        // Delete table by his id
-        $sql    = "DELETE FROM `".$table."` WHERE id =".$id;
-        $query  = $this->Jigo->query($sql);
-
-        return true;
+        $sql    = "DELETE FROM `".$table."` WHERE `id` =".$id;
+        $query  = $this->conector->query($sql);
+        if($query->num_rows > 0){
+            if ($query) {
+                return true;
+            }
+        }else{
+            return false;
+        }
     }
 
 
@@ -28,7 +47,7 @@ class engine extends DB{
         $codition = substr($codition, 0, -2);
 
         $sql = "UPDATE `".$table."` SET ".$codition." WHERE `id` =".$ky;
-        $query  =   $this->Jigo->query($sql);
+        $query  =   $this->conector->query($sql);
         if ($query) {
             return true;
         }else{
@@ -47,7 +66,7 @@ class engine extends DB{
         $codition = substr($codition, 0, -2);
 
         $sql = "UPDATE `".$table."` SET ".$codition." WHERE `id` =".$ky;
-        $query  =   $this->Jigo->query($sql);
+        $query  =   $this->conector->query($sql);
         if ($query) {
             return true;
         }else{
@@ -63,7 +82,7 @@ class engine extends DB{
         }
 
         $sql = "UPDATE `".$table."` SET `status` = '200' WHERE ".$id;
-        $query  =   $this->Jigo->query($sql);
+        $query  =   $this->conector->query($sql);
 
         if($query->num_rows > 0){
             if ($query) {
@@ -79,7 +98,7 @@ class engine extends DB{
         $sql    .=  "INSERT INTO `".$table;
         $sql    .=  "` (`".implode("`,`", array_keys($fields))."`) VALUES ";
         $sql    .=  "('".implode("','", array_values($fields))."')";
-        $query  =   $this->Jigo->query($sql);
+        $query  =   $this->conector->query($sql);
 
         if ($query) {
             return true;
@@ -93,7 +112,7 @@ class engine extends DB{
     {
         $sql = "SELECT * FROM `".$table;
         $sql .= "` WHERE `status` = '404'";
-        $query = $this->Jigo->query($sql);
+        $query = $this->conector->query($sql);
         $tableCount = $query->num_rows;
 
         return $tableCount;
@@ -103,7 +122,7 @@ class engine extends DB{
     {
        $sql = "SELECT * FROM `".$table."`";
         $array = array();
-        $query = $this->Jigo->query($sql);
+        $query = $this->conector->query($sql);
          if($query->num_rows > 0){
             while ($row = $query->fetch_array()) {
                 $array[] = $row;
