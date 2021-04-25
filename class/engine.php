@@ -54,44 +54,6 @@ class engine extends DB{
             return false;
         }
     }
-
-     public function update2($table, $fields, $ky)
-    {
-        //$id = "";
-        $codition = "";
-        foreach ($fields as $key => $value) {
-            $codition .= "`".$key. "` = '".$value."', ";
-        }
-
-        $codition = substr($codition, 0, -2);
-
-        $sql = "UPDATE `".$table."` SET ".$codition." WHERE `id` =".$ky;
-        $query  =   $this->conector->query($sql);
-        if ($query) {
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public function delete($table, $ky)
-    {
-        $id = "";
-        foreach ($ky as $key => $value) {
-            $id .= "`".$key ."` = '".$value."'";    
-        }
-
-        $sql = "UPDATE `".$table."` SET `status` = '200' WHERE ".$id;
-        $query  =   $this->conector->query($sql);
-
-        if($query->num_rows > 0){
-            if ($query) {
-                return true;
-            }
-        }else{
-            return false;
-        }
-    }
     
     public function Insert($table,$fields){
         $sql    =   "";
